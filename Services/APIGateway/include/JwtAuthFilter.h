@@ -37,7 +37,7 @@ public:
 
                 if (!decodedToken.has_header_claim("kid"))
                 {
-                    // TODO: Handle missing 'kid'
+                    // TODO: Handle missing 'kid'.
                 }
                 if (m_publicKeysMap.find(kid) == m_publicKeysMap.end())
                 {
