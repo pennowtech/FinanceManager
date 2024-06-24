@@ -1,0 +1,9 @@
+tmp/
+.mypy_cache/
+.venv/
+build/
+build2/
+linuxconfig/
+Repos/
+.cache/
+graph

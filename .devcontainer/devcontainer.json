@@ -1,0 +1,107 @@
+{
+	"name": "dummy container",
+	"build": {
+		"dockerfile": "Dockerfile",
+        "context": ".."
+	},
+	// 👇 Features to add to the Dev Container. More info: https://containers.dev/implementors/features.
+    "features": {
+        "github-cli": "latest",
+        // "ghcr.io/stuartleeks/dev-container-features/shell-history:0": {}
+    },
+
+	// 👇 Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// "postCreateCommand": "poetry install --no-root",
+
+	// 👇 Configure tool-specific properties.
+	"customizations": {
+        "vscode": {
+            "extensions":[
+                "ms-python.python", 
+                "njpwerner.autodocstring", 
+                "ms-azuretools.vscode-docker", 
+                "ms-python.pylint", 
+                "ms-python.flake8", 
+                "ms-python.mypy-type-checker",
+                "ms-python.black-formatter",
+                "ms-vscode.cpptools",
+                "ms-vscode.cmake-tools",
+                "tonka3000.qt-tools",
+                "mhutchie.git-graph",
+				"twxs.cmake",
+                "xaver.clang-format",
+                "llvm-vs-code-extensions.vscode-clangd"
+            ],
+            "settings": {
+                "terminal.integrated.shell.linux": "/bin/zsh",
+                
+                // Disable the native IntelliSense autocomplete to avoid conflicts with clangd
+                "C_Cpp.autocomplete": "disabled", 
+                "clangd.path": "/usr/bin/clangd",
+                "cpp.editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+                "clangd.arguments": [
+                    "--background-index"
+                ],
+                "files.associations": {
+                    "*.h": "c",
+                    "*.hpp": "cpp"
+                },
+                "python.testing.pytestArgs": [
+                    "."
+                ],
+                "pylint.args": [
+                    "--max-line-length=150",
+                    "--disable=W0107,C0114"
+                ],
+                // Following line will fail for any new container as poetry virtual environment doesn't exist yet.
+                "pylint.interpreter": [
+                    // $(poetry env info -p)/bin/python3
+                ],
+                "python.defaultInterpreterPath": "/home//.pyenv/shims/python",
+                "python.testing.unittestEnabled": false,
+                "python.testing.pytestEnabled": true,
+                "python.editor.defaultFormatter": "ms-python.black-formatter",
+                "python.linting.enabled": true,
+                "python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
+                "python.formatting.blackPath": "/usr/local/py-utils/bin/black",
+                "python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf"
+            }
+		}
+    },
+    // "features": {
+    //     "ghcr.io/devcontainers/features/common-utils:2": {
+    //         "configureZshAsDefaultShell": true
+    //     },
+    //     "ghcr.io/devcontainers-contrib/features/zsh-plugins:0": {},
+    //     "ghcr.io/schlich/devcontainer-features/powerlevel10k:1": {},
+    //     "ghcr.io/devcontainers-contrib/features/neovim:1": {}
+    // },
+
+	// 👇 Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+
+    "remoteEnv": {
+		"DISPLAY": ":0.0",
+		"LD_LIBRARY_PATH": "${localEnv:LD_LIBRARY_PATH}:/usr/lib/wsl/lib",
+		"LIBGL_ALWAYS_INDIRECT": "${localEnv:LIBGL_ALWAYS_INDIRECT}",
+		"LIBGL_ALWAYS_SOFTWARE": "${localEnv:LIBGL_ALWAYS_SOFTWARE}",
+		"PATH": "${containerEnv:PATH}:/home/bob/.local/bin",
+		"PULSE_SERVER": "${localEnv:PULSE_SERVER}",
+		"TZ": "Europe/Berlin",
+		"WAYLAND_DISPLAY": "${localEnv:WAYLAND_DISPLAY}",
+		"XDG_RUNTIME_DIR": "${localEnv:XDG_RUNTIME_DIR}",
+        "VENV_PATH": ".venv",
+        "REQUESTS_CA_BUNDLE": "/etc/ssl/certs/ca-certificates.crt"
+	},
+    "mounts": [
+        "source=/mnt/d,target=/mnt/d,type=bind",
+        "source=conan_cache,target=/home/vscode/.conan2,type=volume",
+        "source=poetry_cache,target=/home/vscode/.cache/pypoetry,type=volume",
+        "source=poetry_envs,target=/home/vscode/.cache/pypoetry/virtualenvs,type=volume",
+        "source=/mnt/wslg,target=/mnt/wslg,type=bind",
+        "source=/mnt/wslg/.X11-unix,target=/tmp/.X11-unix,type=bind",
+        "source=/usr/lib/wsl,target=/usr/lib/wsl,type=bind"
+    ]
+}

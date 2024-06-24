@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres-container
+    environment:
+      POSTGRES_USER: postgresuser
+      POSTGRES_PASSWORD: postgrespwd
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:6
+    container_name: redis-container
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  cassandra:
+    image: cassandra:4
+    container_name: cassandra-container
+    ports:
+      - "9042:9042"
+    environment:
+      CASSANDRA_USER: cassandrauser
+      CASSANDRA_PASSWORD: cassandrapwd
+      CASSANDRA_CLUSTER_NAME: "Cassandra Cluster"
+      CASSANDRA_NUM_TOKENS: 256
+      CASSANDRA_DC: "dc1"
+      CASSANDRA_RACK: "rack1"
+    volumes:
+      - cassandra_data:/var/lib/cassandra
+
+volumes:
+  postgres_data:
+  redis_data:
+  cassandra_data:
+
