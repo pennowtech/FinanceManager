@@ -3,7 +3,15 @@ tmp/
 .venv/
 build/
 build2/
-linuxconfig/
+linuxconfig/ZscalerRootCertificate-2048-SHA256.crt
+linuxconfig/settings.yml
+linuxconfig/cacert.pem
 Repos/
 .cache/
 graph
+ZscalerRootCA.crt
+.env
+docs.md
+conangraph.txt
+buildcommand.sh
+*.swp

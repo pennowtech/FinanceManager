@@ -1,0 +1,11 @@
+[tool_requires]
+[settings]
+  os=Linux
+  os.distro.version=22.04
+  arch=x86_64
+  compiler=gcc
+  compiler.cppstd=20
+  compiler.version=11
+  compiler.libcxx=libstdc++11
+  build_type=Debug
+[options]
