@@ -1,7 +1,8 @@
 #!/bin/sh
 
-LICENSE_FILE="license_header.txt"
-LICENSE_HEADER=$(cat "$LICENSE_FILE")
+LICENSE_FILE="LICENSE"
+LICENSE_HEADER=$(cat $LICENSE_FILE)
+echo $LICENSE_HEADER
 
 # Function to prepend license to files
 add_license() {

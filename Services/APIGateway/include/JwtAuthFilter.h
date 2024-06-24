@@ -25,7 +25,7 @@ public:
 
             try
             {
-                // Verify the JWT token
+                // Verify the JWT token.
                 auto decodedToken = jwt::decode(token);
 
                 std::cout << "SDSINGH. Printing JWT Keys..\n";
