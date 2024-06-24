@@ -49,6 +49,6 @@ Item {
             onLoginFailure: statusText.text = "Login Failed: " + error
             onPasswordResetSuccess: statusText.text = "Password Reset Email Sent"
             onPasswordResetFailure: statusText.text = "Password Reset Failed: " + error
-        }                
+        }
     }
 }

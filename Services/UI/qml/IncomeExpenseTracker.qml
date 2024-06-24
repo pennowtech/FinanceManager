@@ -32,7 +32,7 @@ GroupBox {
                             contextMenu.open()
                         }
                     }
-                }                
+                }
             }
 
             Label {

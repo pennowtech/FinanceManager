@@ -30,8 +30,8 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 find_package(Drogon REQUIRED)
 find_package(log4cplus REQUIRED)
 find_package(nlohmann_json REQUIRED)
-find_package(asio-grpc REQUIRED)
 find_package(jwt-cpp REQUIRED)
+find_package(libenvpp REQUIRED)
 
 # Add the source files
 set(SOURCES
@@ -40,7 +40,7 @@ set(SOURCES
 
 # Add the header files for MOC
 set(HEADERS
-    ${PROJECT_SOURCE_DIR}/include/GatewayController.h
+    ${PROJECT_SOURCE_DIR}/include/JwtAuthFilter.h
     # ${PROJECT_SOURCE_DIR}/include/Logger.h
     # ${PROJECT_SOURCE_DIR}/include/LoggingHelpers.h
 )
@@ -48,11 +48,11 @@ set(HEADERS
 add_library(lib${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
 target_link_libraries(lib${PROJECT_NAME}
-    PUBLIC log4cplus::log4cplus 
-    PUBLIC Drogon::Drogon 
-    PUBLIC nlohmann_json::nlohmann_json 
-    PUBLIC asio-grpc::asio-grpc 
+    PUBLIC log4cplus::log4cplus
+    PUBLIC Drogon::Drogon
+    PUBLIC nlohmann_json::nlohmann_json
     PUBLIC jwt-cpp::jwt-cpp
+    PUBLIC libenvpp::libenvpp
     rt)
 
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCE_DIR}/src/main.cpp)

@@ -40,7 +40,7 @@ find_package(libpqxx REQUIRED)
 find_package(Drogon REQUIRED)
 find_package(httplib REQUIRED)
 find_package(nlohmann_json REQUIRED)
-find_package(asio-grpc REQUIRED)
+
 find_package(cpp-jwt REQUIRED)
 find_package(GTest REQUIRED)
 
@@ -69,15 +69,15 @@ set(HEADERS
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
 target_link_libraries(${PROJECT_NAME}
-    PRIVATE Qt6::Core Qt6::Quick Qt6::Widgets Qt6::Charts 
-    PRIVATE log4cplus::log4cplus 
-    PRIVATE redis++::redis++_static 
-    PRIVATE cassandra-cpp-driver::cassandra-cpp-driver 
-    PRIVATE libpqxx::pqxx 
-    PRIVATE Drogon::Drogon 
-    PRIVATE httplib::httplib 
-    PRIVATE nlohmann_json::nlohmann_json 
-    PRIVATE asio-grpc::asio-grpc 
+    PRIVATE Qt6::Core Qt6::Quick Qt6::Widgets Qt6::Charts
+    PRIVATE log4cplus::log4cplus
+    PRIVATE redis++::redis++_static
+    PRIVATE cassandra-cpp-driver::cassandra-cpp-driver
+    PRIVATE libpqxx::pqxx
+    PRIVATE Drogon::Drogon
+    PRIVATE httplib::httplib
+    PRIVATE nlohmann_json::nlohmann_json
+
     PRIVATE cpp-jwt::cpp-jwt
     rt)
 

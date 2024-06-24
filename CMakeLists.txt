@@ -33,9 +33,12 @@ add_compile_options(-Wall -Wextra -Werror)
 # target_link_libraries(lib${PROJECT_NAME} gtest::gtest)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+# set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+message(STATUS "${PROJECT_NAME}: CMAKE_EXPORT_COMPILE_COMMANDS: \"${CMAKE_EXPORT_COMPILE_COMMANDS}\"")
+message(STATUS "${PROJECT_NAME}: CMAKE_BUILD_TYPE: \"${CMAKE_BUILD_TYPE}\"")
 
 # BUILD_OPTION can also be supplied through command line -DBUILD_TESTS=ON
-option(BUILD_TESTS "Build Unit Tests" OFF) 
+option(BUILD_TESTS "Build Unit Tests" OFF)
 message(STATUS "${PROJECT_NAME}: BUILD_TESTS: \"${BUILD_TESTS}\"")
 
 option(COVERAGE "Build with coverage" OFF)
@@ -64,12 +67,9 @@ add_custom_command(
     COMMENT "Stopping processes..."
     VERBATIM
 )
+
 add_custom_target(
     stop_processes
-    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/stopping_processes
-)
-add_custom_target(
-    stop_processes2
     COMMAND bash ${CMAKE_SOURCE_DIR}/manage_services.sh killall
     COMMENT "Stopping processes..."
 )

@@ -1,5 +1,5 @@
 # FROM python:3.10
-# FROM mcr.microsoft.com/devcontainers/base:jammy 
+# FROM mcr.microsoft.com/devcontainers/base:jammy
 FROM carlonluca/qt-dev:6.7.1
 
 ARG DEBIAN_FRONTEND=noninteractive
@@ -18,7 +18,7 @@ RUN id -u $USERNAME || useradd --uid 1000 --gid 1000 -m $USERNAME
 ENV PATH="${HOME}/.local/bin:${PATH}"
 
 RUN DEBIAN_FRONTEND=noninteractive \
-    && apt-get update \ 
+    && apt-get update \
     && apt-get install -y build-essential --no-install-recommends make \
         ca-certificates \
         git \
@@ -60,8 +60,8 @@ RUN apt-get update && apt-get install -y \
     libepoxy0 \
     libgtk-3-0 \
     libgdk-pixbuf2.0-0 \
-    libxcb-cursor0 \ 
-    libxcb-icccm4 \  
+    libxcb-cursor0 \
+    libxcb-icccm4 \
     x11-apps \
     libxcb-render0-dev \
     libxcb-render-util0-dev \
@@ -93,7 +93,7 @@ RUN apt-get update && apt-get install -y \
 
 COPY ZscalerRootCA.crt /usr/local/share/ca-certificates/ZscalerRootCA.crt
 RUN update-ca-certificates
-    
+
 # Python and poetry installation
 # RUN DEBIAN_FRONTEND=noninteractive \
 #     && apt-get update && apt-get install -y \
@@ -114,7 +114,7 @@ RUN mkdir -p $HOME && chown -R $USERNAME:$USERNAME $HOME
 WORKDIR $HOME
 
 RUN curl -sSL https://install.python-poetry.org | python3 -
-    
+
 RUN poetry config virtualenvs.path "${POETRY_ENV_ROOT}"
 ENV PATH="${POETRY_ENV_ROOT}/bin:${HOME}/.local/bin:$PATH"
 
@@ -127,7 +127,7 @@ COPY . /app
 
 RUN pip install -r requirements.txt
 
-    
+
 # Install Zsh
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions

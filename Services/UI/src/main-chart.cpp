@@ -8,9 +8,10 @@
 
 QT_USE_NAMESPACE
 
-int main(int argc, char *argv[]) {
-  QApplication app(argc, argv);
-  qDebug() << "Qt version:" << qVersion();
+int main(int argc, char* argv[])
+{
+    QApplication app(argc, argv);
+    qDebug() << "Qt version:" << qVersion();
 
     auto chartView = chart();
 
@@ -19,5 +20,4 @@ int main(int argc, char *argv[]) {
     window.resize(400, 300);
     window.show();
     return app.exec();
-
 }

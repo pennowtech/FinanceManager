@@ -1,18 +1,19 @@
 #ifndef FINANCEMANAGER_H
 #define FINANCEMANAGER_H
 
-#include <QObject>
 #include "DBManager.h"
+#include <QObject>
 
-class FinanceManager : public QObject {
+class FinanceManager : public QObject
+{
     Q_OBJECT
 public:
-    explicit FinanceManager(QObject *parent = nullptr);
-    
-    Q_INVOKABLE void addTransaction(const QString &amount, const QString &category);
-    Q_INVOKABLE void setBudget(const QString &category, int amount);
+    explicit FinanceManager(QObject* parent = nullptr);
+
+    Q_INVOKABLE void addTransaction(const QString& amount, const QString& category);
+    Q_INVOKABLE void setBudget(const QString& category, int amount);
     Q_INVOKABLE QVariantList loadTransactions();
-    Q_INVOKABLE void generateReport(const QString &reportType);
+    Q_INVOKABLE void generateReport(const QString& reportType);
 
     void setDatabaseManager(DatabaseManager* dbManager);
 

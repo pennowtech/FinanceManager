@@ -27,23 +27,23 @@ chart.addSeries(series)
 
 # Create and configure the axes
 axisX = QValueAxis()
-axisX.setTitleText("X Axis Label")
+axisX.setTitleText('X Axis Label')
 chart.addAxis(axisX, Qt.AlignBottom)
 series.attachAxis(axisX)
 
 axisY = QValueAxis()
-axisY.setTitleText("Y Axis Label")
+axisY.setTitleText('Y Axis Label')
 chart.addAxis(axisY, Qt.AlignLeft)
 series.attachAxis(axisY)
 
-chart.setTitle("Simple Line Chart Example")
+chart.setTitle('Simple Line Chart Example')
 
 # Create the ChartView
 chart_view = QChartView(chart)
 chart_view.setRenderHint(QPainter.Antialiasing)
 
 # Create a QLabel
-label = QLabel("This is a QLabel with some text")
+label = QLabel('This is a QLabel with some text')
 
 # Set up layout and central widget
 main_widget = QWidget()

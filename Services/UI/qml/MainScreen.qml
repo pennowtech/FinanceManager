@@ -29,7 +29,7 @@ Item {
 
     MenuBar {
         id: menuBar
-      
+
         Menu {
             title: "File"
             MenuItem {
@@ -39,21 +39,21 @@ Item {
                 Label {
                     anchors.centerIn: parent
                     text: shortcutHelper2.nativeText
-                    verticalAlignment: Text.AlignVCenter  
-                    horizontalAlignment: Text.AlignRight  
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignRight
                     anchors.right: parent.right
-                }                  
+                }
                 Shortcut {
                     id: shortcutHelper2
                     sequence: "Ctrl+Q"
                     onActivated: Qt.quit()
-                }              
+                }
             }
         }
-     
+
         Menu {
             title: "View"
-            
+
             MenuItem {
                 text: "Income/Expense"
                 onTriggered: stackLayout.currentIndex = 0
@@ -95,7 +95,7 @@ Item {
                         id: mouseArea
                         anchors.fill: parent
                         hoverEnabled: true
-                    }                    
+                    }
                 }
                 ToolButton {
                     text: "Budget Manager"
@@ -108,7 +108,7 @@ Item {
                 ToolButton {
                     text: "Settings"
                     onClicked: settingsWindow.visible = true
-                }                
+                }
             }
         }
 

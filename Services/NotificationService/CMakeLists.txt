@@ -32,7 +32,7 @@ find_package(Qt6 COMPONENTS Core Gui Quick Widgets Charts Test REQUIRED)
 find_package(log4cplus REQUIRED)
 find_package(Drogon REQUIRED)
 find_package(nlohmann_json REQUIRED)
-find_package(asio-grpc REQUIRED)
+
 find_package(cpp-jwt REQUIRED)
 find_package(GTest REQUIRED)
 message(STATUS "Using Qt version: ${Qt6_VERSION}")
@@ -52,10 +52,10 @@ add_library(lib${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
 target_link_libraries(lib${PROJECT_NAME}
     PRIVATE Qt6::Core Qt6::Gui Qt6::Quick Qt6::Widgets Qt6::Charts Qt6::Test
-    PRIVATE log4cplus::log4cplus 
-    PRIVATE Drogon::Drogon 
-    PRIVATE nlohmann_json::nlohmann_json 
-    PRIVATE asio-grpc::asio-grpc 
+    PRIVATE log4cplus::log4cplus
+    PRIVATE Drogon::Drogon
+    PRIVATE nlohmann_json::nlohmann_json
+
     PRIVATE cpp-jwt::cpp-jwt
     rt)
 
@@ -84,7 +84,7 @@ endif()
 
 if(BUILD_QT_TESTS)
     add_executable(${PROJECT_NAME}_qt_tests tests/test_qt_main.cpp)
-    target_link_libraries(${PROJECT_NAME}_qt_tests 
+    target_link_libraries(${PROJECT_NAME}_qt_tests
         PRIVATE lib${PROJECT_NAME}
         PRIVATE Qt6::Test)
     add_test(NAME ${PROJECT_NAME}_qt_test COMMAND ${PROJECT_NAME}_qt_tests)

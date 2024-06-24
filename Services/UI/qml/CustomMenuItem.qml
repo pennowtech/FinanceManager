@@ -10,7 +10,7 @@ import QtQuick.Layouts 1.15
 //     CustomMenuItem  {
 //         text: "Exit"
 //         shortcut: "Ctrl+Q"
-//         onTriggered: Qt.quit              
+//         onTriggered: Qt.quit
 //     }
 // }
 

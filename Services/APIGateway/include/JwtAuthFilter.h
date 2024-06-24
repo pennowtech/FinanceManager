@@ -3,39 +3,68 @@
 #include <drogon/HttpFilter.h>
 #include <jwt-cpp/jwt.h>
 
-class JwtAuthFilter : public drogon::HttpFilter<JwtAuthFilter> {
-   private:
-    std::string projectId;
-    std::unordered_map<std::string, std::string> publicKeysMap;
+class JwtAuthFilter : public drogon::HttpFilter<JwtAuthFilter>
+{
+private:
+    std::string m_projectId;
+    std::unordered_map<std::string, std::string> m_publicKeysMap;
 
-   public:
-    JwtAuthFilter(const std::string &projectId, const std::string &publicKeyUrl)
-        : projectId(projectId), publicKeyUrl(publicKeyUrl) {}
+public:
+    JwtAuthFilter(const std::string& projectId, const std::unordered_map<std::string, std::string>& publicKeyMap)
+        : m_projectId(projectId)
+        , m_publicKeysMap(publicKeyMap)
+    {
+    }
 
-    void doFilter(const drogon::HttpRequestPtr &req, drogon::FilterCallback &&fcb,
-                  drogon::FilterChainCallback &&fccb) override {
-        const std::string &authorizationHeader = req->getHeader("Authorization");
-        if (authorizationHeader.find("Bearer ") != std::string::npos) {
-            std::string token = authorizationHeader.substr(7);  // Strip 'Bearer ' to get the token
+    void doFilter(const drogon::HttpRequestPtr& req, drogon::FilterCallback&& fcb, drogon::FilterChainCallback&& fccb)
+    {
+        const std::string& authorizationHeader = req->getHeader("Authorization");
+        if (authorizationHeader.find("Bearer ") != std::string::npos)
+        {
+            const std::string token = authorizationHeader.substr(7); // Strip 'Bearer ' to get the token
 
-            try {
+            try
+            {
                 // Verify the JWT token
                 auto decodedToken = jwt::decode(token);
+
+                std::cout << "SDSINGH. Printing JWT Keys..\n";
+
+                for (auto& e : decodedToken.get_payload_json())
+                    std::cout << e.first << " = " << e.second << std::endl;
+
                 auto kid = decodedToken.get_header_claim("kid").as_string();
 
-                // Get the public key corresponding to the 'kid' in the JWT header
-                //TODO: Handle scenario if key is not found.
-                std::string publicKey = publicKeysMap.at(kid);
+                if (!decodedToken.has_header_claim("kid"))
+                {
+                    // TODO: Handle missing 'kid'
+                }
+                if (m_publicKeysMap.find(kid) == m_publicKeysMap.end())
+                {
+                    // TODO: Handle missing public key for 'kid'
+                }
 
-                auto verifier = jwt::verify()
-                                    .allow_algorithm(jwt::algorithm::rs256{publicKey})
-                                    .with_issuer("https://securetoken.google.com/" + projectId);
+                // Get the public key corresponding to the 'kid' in the JWT header
+                std::string publicKey = m_publicKeysMap.at(kid);
+
+                auto verifier =
+                    jwt::verify().allow_algorithm(jwt::algorithm::rs256{publicKey}).with_issuer("https://securetoken.google.com/" + m_projectId);
 
                 verifier.verify(decodedToken);
 
                 // Token is valid; continue the request
                 fccb();
-            } catch (const jwt::token_verification_exception &e) {
+            }
+            catch (const jwt::token_expired_exception& e)
+            {
+                // Handle expired token
+            }
+            catch (const jwt::invalid_token_exception& e)
+            {
+                // Handle other token validation errors (like wrong signature)
+            }
+            catch (const jwt::token_verification_exception& e)
+            {
                 // Token is invalid
                 auto response = drogon::HttpResponse::newHttpResponse();
                 response->setStatusCode(drogon::k401Unauthorized);
@@ -43,7 +72,13 @@ class JwtAuthFilter : public drogon::HttpFilter<JwtAuthFilter> {
                 fcb(response);
                 return;
             }
-        } else {
+            catch (const std::exception& e)
+            {
+                // Handle other standard exceptions
+            }
+        }
+        else
+        {
             // No or improper Authorization header
             auto response = drogon::HttpResponse::newHttpResponse();
             response->setStatusCode(drogon::k401Unauthorized);

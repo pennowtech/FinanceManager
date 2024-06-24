@@ -39,4 +39,3 @@ volumes:
   postgres_data:
   redis_data:
   cassandra_data:
-

@@ -11,7 +11,7 @@ function rebuild() {
 
     mkdir -p build
     cd build
-    cmake .. -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTS=ON
+    cmake .. -DBUILD_TESTS=OFF -DCMAKE_TOOLCHAIN_FILE=Debug/generators/conan_toolchain.cmake
     echo "Starting building microservice now ..."
     cmake --build .
 }

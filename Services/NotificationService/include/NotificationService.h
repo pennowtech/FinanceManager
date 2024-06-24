@@ -1,11 +1,10 @@
-#include <drogon/drogon.h>
 #include <drogon/WebSocketController.h>
+#include <drogon/drogon.h>
 
-class NotificationService : public drogon::WebSocketController<NotificationService> {
+class NotificationService : public drogon::WebSocketController<NotificationService>
+{
 public:
-    virtual void handleNewMessage(const drogon::WebSocketConnectionPtr&,
-                                  std::string&& message,
-                                  const drogon::WebSocketMessageType& type) override;
+    virtual void handleNewMessage(const drogon::WebSocketConnectionPtr&, std::string&& message, const drogon::WebSocketMessageType& type) override;
 
     virtual void handleConnectionClosed(const drogon::WebSocketConnectionPtr&) override;
 
