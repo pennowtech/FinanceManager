@@ -46,32 +46,27 @@ add_license() {
     echo "$license_header" > "$temp_file"
     cat "$file" >> "$temp_file"
     mv "$temp_file" "$file"
-    grep -qF "$license_header_cpp" "$file"
+    grep -qF "GNU General Public License" "$file"
     return $?
 }
 
 # Function to check license in files
 check_and_add_cpp_license() {
-    # files="Utils/include/Utils/Logger.h Utils/include/Utils/EnvReader.h"
+    # files="Services/UI/src/RedisHandler.cpp Utils/include/Utils/EnvReader.h"
     # for file in $files; do
     for file in $(git diff --cached --name-only | grep -E '\.(c|h|cpp|hpp)$'); do
+    # for file in $(git ls-files "*.cpp" "*.h" "*.py" "CMakeLists.txt"); do
          echo "Checking license header in: $file."
-        if ! grep -qF "$license_header_cpp" "$file"; then
+        if ! grep -qF "GNU General Public License" "$file"; then
             echo "License header missing in: $file."
-            if add_license "$file" "$license_header_cpp"; then
-                echo "License header added!"
-                git add "$file"
-            else
-                echo "License header can't be added"
-                license_check_fail=1
-            fi
+            license_check_fail=1
         fi
     done
 }
 check_and_add_py_license() {
     for file in $(git diff --cached --name-only | grep -E '\.(py|txt)$'); do
          echo "Checking license header in: $file."
-        if ! grep -qF "$license_header_py" "$file"; then
+        if ! grep -qF "GNU General Public License" "$file"; then
             echo "License header missing in: $file."
             if add_license "$file" "$license_header_py"; then
                 echo "License header added!"

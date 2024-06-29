@@ -67,5 +67,11 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "any": "cpp"
-    }
+    },
+    // ext: ymotongpoo.licenser
+    "licenser.author": "Sukhdeep Singh",
+    "licenser.projectName": "Finance Manager",
+    "licenser.customTermsAndConditions": "Copyright @YEAR@ @AUTHOR@\n\n",
+    "licenser.license": "GPLv3",
+    "licenser.useSingleLineStyle": false,
 }
