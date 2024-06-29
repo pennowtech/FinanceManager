@@ -7,12 +7,28 @@ ApplicationWindow {
     height: 480
     title: qsTr("Personal Finance Manager")
 
+    NotificationDialog{
+        id: _notificationDialog
+    }
+
     StackView {
-        id: stackView
+        id: _stackView
         anchors.fill: parent
         initialItem: LoginScreen {
-            onLoginSuccessful: stackView.push(Qt.resolvedUrl("MainScreen.qml"))
-            onRegisterRequested: stackView.push(Qt.resolvedUrl("RegisterScreen.qml"))
+            onLoginSuccessful: _stackView.push(Qt.resolvedUrl("MainScreen.qml"))
+            onRegisterRequested: _stackView.push(Qt.resolvedUrl("RegisterScreen.qml"))
+        }
+    }
+
+    Component.onCompleted: {
+        _notificationDialog.message = "Welcome to Personal Finance Manager"
+        _notificationDialog.open()
+    }
+
+    Connections {
+        target: _stackView.currentItem
+        function onCancelRegistration() {
+            _stackView.pop()
         }
     }
 }

@@ -10,13 +10,19 @@ message(STATUS "Started building project: ${PROJECT_NAME}")
 # Optionally set the C++ standard globally
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# set(CMAKE_CXX_COMPILER "/usr/bin/clang++-14")
+add_compile_options(-ftemplate-backtrace-limit=0)
 
 # include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 # conan_basic_setup()
 option(USE_CONAN "Use Conan for dependencies" ON)
 message(STATUS "${PROJECT_NAME}: USE_CONAN: \"${USE_CONAN}\"")
 
+# Include the Utils directory
+include_directories(${PROJECT_SOURCE_DIR}/Utils/include)
+
 # Include each service
+add_subdirectory(Utils)
 add_subdirectory(Services/APIGateway)
 # add_subdirectory(Services/AuthAPI)
 # add_subdirectory(Services/DBManager)
@@ -35,7 +41,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 # set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 message(STATUS "${PROJECT_NAME}: CMAKE_EXPORT_COMPILE_COMMANDS: \"${CMAKE_EXPORT_COMPILE_COMMANDS}\"")
-message(STATUS "${PROJECT_NAME}: CMAKE_BUILD_TYPE: \"${CMAKE_BUILD_TYPE}\"")
+message(STATUS "${PROJECT_NAME}: CMAKE_CXX_COMPILER: \"${CMAKE_CXX_COMPILER}\"")
 
 # BUILD_OPTION can also be supplied through command line -DBUILD_TESTS=ON
 option(BUILD_TESTS "Build Unit Tests" OFF)

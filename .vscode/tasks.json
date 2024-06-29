@@ -3,12 +3,41 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "make",
-            "command": "cd build && make",
-            "args": [],
+            "label": "Run API Gatway",
+            "command": "build/Debug/Services/APIGateway/APIGateway",
+            "args": [
+                "-e",
+                "/workspaces/qmldevcontainer/.env"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
             "problemMatcher": [
                 "$gcc"
-            ]
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "Run UI",
+            "command": "build/Debug/Services/UI/UI",
+            "args": [
+                "-e",
+                "/workspaces/qmldevcontainer/.env"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }

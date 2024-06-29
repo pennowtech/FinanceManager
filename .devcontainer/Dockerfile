@@ -18,29 +18,29 @@ RUN id -u $USERNAME || useradd --uid 1000 --gid 1000 -m $USERNAME
 ENV PATH="${HOME}/.local/bin:${PATH}"
 
 RUN DEBIAN_FRONTEND=noninteractive \
-    && apt-get update \
-    && apt-get install -y build-essential --no-install-recommends make \
-        ca-certificates \
-        git \
-        zsh \
-        libssl-dev \
-        zlib1g-dev \
-        libbz2-dev \
-        libreadline-dev \
-        libsqlite3-dev \
-        wget \
-        curl \
-        llvm \
-        libncurses5-dev \
-        xz-utils \
-        tk-dev \
-        libxml2-dev \
-        libxmlsec1-dev \
-        libffi-dev \
-        liblzma-dev \
+    && apt-get update && apt-get install -y \
+    build-essential --no-install-recommends make \
+    ca-certificates \
+    git \
+    zsh \
+    libssl-dev \
+    zlib1g-dev \
+    libbz2-dev \
+    libreadline-dev \
+    libsqlite3-dev \
+    wget \
+    curl \
+    llvm \
+    libncurses5-dev \
+    xz-utils \
+    tk-dev \
+    libxml2-dev \
+    libxmlsec1-dev \
+    libffi-dev \
+    liblzma-dev
 
-# Install necessary packages for Qt and PySide6
-RUN apt-get update && apt-get install -y \
+    # Install necessary packages for Qt and PySide6
+    RUN apt-get update && apt-get install -y \
     libgl1-mesa-dev \
     libgl1-mesa-glx \
     libxkbcommon-x11-0 \
@@ -146,7 +146,8 @@ USER root
 RUN cat linuxconfig/ZscalerRootCertificate-2048-SHA256.crt >> /etc/ssl/certs/ca-certificates.crt
 RUN echo "root:123456" | chpasswd
 
-COPY linuxconfig/conan-debug-profile ${HOME}/.conan2/profiles/conan-debug-profile
+COPY linuxconfig/gcc-debug-profile ${HOME}/.conan2/profiles/gcc-debug-profile
+COPY linuxconfig/clang-debug-profile ${HOME}/.conan2/profiles/clang-debug-profile
 # COPY linuxconfig/remotes.json ${HOME}/.conan2/remotes.json
 RUN chown -R $USERNAME:$USERNAME ${HOME}/.conan2
 

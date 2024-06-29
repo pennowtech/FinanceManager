@@ -9,7 +9,7 @@ Dialog {
     y: parent.height / 2 - height / 2
 
     property string message: ""
-    property int duration: 3000
+    property int duration: 1000
 
     contentItem: Column {
         spacing: 10
@@ -17,6 +17,7 @@ Dialog {
 
         Text {
             text: notificationDialog.message
+            wrapMode: Text.Wrap
         }
     }
 

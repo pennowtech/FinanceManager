@@ -1,4 +1,7 @@
 {
+    "cmake.configureSettings": {
+        "CMAKE_CXX_COMPILER": "/usr/bin/clang++-14"
+    },
     "files.associations": {
         "atomic": "cpp",
         "ostream": "cpp",

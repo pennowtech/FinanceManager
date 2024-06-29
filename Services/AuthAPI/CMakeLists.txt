@@ -1,13 +1,4 @@
-# ---------------------------------------------------------------------------------------
-#                         Copyright (©) Carl Zeiss Meditec AG
-#                               - All Rights Reserved -
-#
-#                     THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
-#                                  CARL ZEISS MEDITEC AG
-#
-#                       This copyright notice does not evidence any
-#                    actual or intended publication of such source code.
-# ---------------------------------------------------------------------------------------
+
 
 cmake_minimum_required(VERSION 3.21)
 project(personal-finance VERSION 0.1)
@@ -33,7 +24,6 @@ set(CMAKE_AUTORCC ON)
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
 find_package(Qt6 COMPONENTS Core Quick Widgets Charts REQUIRED)
-find_package(log4cplus REQUIRED)
 find_package(redis++ REQUIRED)
 find_package(cassandra-cpp-driver REQUIRED)
 find_package(libpqxx REQUIRED)
@@ -70,7 +60,6 @@ add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE Qt6::Core Qt6::Quick Qt6::Widgets Qt6::Charts
-    PRIVATE log4cplus::log4cplus
     PRIVATE redis++::redis++_static
     PRIVATE cassandra-cpp-driver::cassandra-cpp-driver
     PRIVATE libpqxx::pqxx

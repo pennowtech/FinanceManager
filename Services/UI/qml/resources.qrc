@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/">
+        <file>fonts/Roboto-Bold.ttf</file>
+        <file>fonts/Roboto-Regular.ttf</file>
+        <file>fonts/Rubik-Bold.ttf</file>
+        <file>fonts/Rubik-Medium.ttf</file>
+        <file>BudgetManager.qml</file>
+        <file>ContextMenu.qml</file>
+        <file>CustomMenuItem.qml</file>
+        <file>DCSStyles.qml</file>
+        <file>FileDialog.qml</file>
+        <file>IncomeExpenseTracker.qml</file>
+        <file>LoginScreen.qml</file>
+        <file>MainScreen.qml</file>
+        <file>MessageDialog.qml</file>
+        <file>Notification.qml</file>
+        <file>NotificationDialog.qml</file>
+        <file>RegisterScreen.qml</file>
+        <file>Reports.qml</file>
+        <file>Settings.qml</file>
+        <file>showTokenRenewalNotification.qml</file>
+        <file>StatusBar.qml</file>
+        <file>main.qml</file>
+    </qresource>
+</RCC>

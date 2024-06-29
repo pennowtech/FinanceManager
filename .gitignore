@@ -16,3 +16,4 @@ conangraph.txt
 buildcommand.sh
 *.swp
 CMakeUserPresets.json
+*.log

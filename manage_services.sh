@@ -2,12 +2,17 @@
 
 function rebuild() {
     echo "Rebuilding all microservices..."
+    # # TODO:  Don\t know why I need to setup these paths manually here when they're already specified in my conan profile
+    # export CC=/usr/bin/clang-14
+    # export CXX=/usr/bin/clang++-14
     if [ -d "build" ]; then
         echo "Removing existing build directory..."
         rm -rf build
     fi
     echo "Installing Conan dependencies..."
-    conan install . --profile:build conan-debug-profile --profile:host conan-debug-profile --build=missing -o with_tests=True
+    conan install . --profile:build clang-debug-profile --profile:host clang-debug-profile --build=missing -o with_tests=True
+
+    echo "Starting building app now ..."
 
     mkdir -p build
     cd build

@@ -1,13 +1,4 @@
-# ---------------------------------------------------------------------------------------
-#                         Copyright (©) Carl Zeiss Meditec AG
-#                               - All Rights Reserved -
-#
-#                     THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
-#                                  CARL ZEISS MEDITEC AG
-#
-#                       This copyright notice does not evidence any
-#                    actual or intended publication of such source code.
-# ---------------------------------------------------------------------------------------
+
 
 cmake_minimum_required(VERSION 3.21)
 project(UI VERSION 0.1)
@@ -29,7 +20,6 @@ set(CMAKE_AUTORCC ON)
 include_directories(${CMAKE_SOURCE_DIR}/include ${Qt6Core_INCLUDE_DIRS} ${Qt6Gui_INCLUDE_DIRS})
 
 find_package(Qt6 COMPONENTS Core Gui Quick Widgets Charts Test REQUIRED)
-find_package(log4cplus REQUIRED)
 find_package(Drogon REQUIRED)
 find_package(nlohmann_json REQUIRED)
 
@@ -52,7 +42,6 @@ add_library(lib${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
 target_link_libraries(lib${PROJECT_NAME}
     PRIVATE Qt6::Core Qt6::Gui Qt6::Quick Qt6::Widgets Qt6::Charts Qt6::Test
-    PRIVATE log4cplus::log4cplus
     PRIVATE Drogon::Drogon
     PRIVATE nlohmann_json::nlohmann_json
 

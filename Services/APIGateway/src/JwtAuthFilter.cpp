@@ -1,3 +1,17 @@
+/*----------------------------------------------------------------------
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ ----------------------------------------------------------------------*/
 
 #include <JwtAuthFilter.h>
 #include <drogon/HttpFilter.h>
@@ -20,56 +34,43 @@ void JwtAuthFilter::doFilter(const drogon::HttpRequestPtr& req, drogon::FilterCa
 
         try
         {
-            // Verify the JWT token
-            auto decodedToken = jwt::decode<jwt::default_traits>(token);
+            auto decoded = jwt::decode<jwt::traits::nlohmann_json>(token);
 
-            std::cout << "SDSINGH. Printing JWT Keys..\n";
+            // Extract the header to get the kid
+            auto kid = decoded.get_header_claim("kid").as_string();
 
-            for (auto& e : decodedToken.get_payload_json())
-                std::cout << e.first << " = " << e.second << std::endl;
-
-            auto kid = decodedToken.get_header_claim("kid").as_string();
-
-            if (!decodedToken.has_header_claim("kid"))
+            // Find the corresponding public key
+            if (publicKeysMap.find(kid) == publicKeysMap.end())
             {
-                // TODO: Handle missing 'kid'
+                std::cerr << "kid (" << kid << ") not found.\n";
+                return true;
             }
-            if (m_publicKeysMap.find(kid) == m_publicKeysMap.end())
-            {
-                // TODO: Handle missing public key for 'kid'
-            }
+            auto pub_key = publicKeysMap.at(kid);
 
-            // Get the public key corresponding to the 'kid' in the JWT header
-            std::string publicKey = m_publicKeysMap.at(kid);
+            auto verifier = jwt::verify<jwt::traits::nlohmann_json>()
+                                .allow_algorithm(jwt::algorithm::rs256{pub_key})
+                                .with_issuer("https://securetoken.google.com/" + projectId); // Replace with your Firebase project ID
 
-            auto verifier =
-                jwt::verify().allow_algorithm(jwt::algorithm::rs256{publicKey}).with_issuer("https://securetoken.google.com/" + m_projectId);
-
-            verifier.verify(decodedToken);
+            verifier.verify(decoded);
+            std::cerr << "Authorization token verified.\n";
 
             // Token is valid; continue the request
             fccb();
         }
-        catch (const jwt::token_expired_exception& e)
+        catch (const jwt::error::invalid_json_exception& e)
         {
-            // Handle expired token
+            std::cerr << "Token parsing error: " << e.what() << "\n";
         }
-        catch (const jwt::invalid_token_exception& e)
+        catch (const jwt::error::token_verification_exception& e)
         {
-            // Handle other token validation errors (like wrong signature)
-        }
-        catch (const jwt::token_verification_exception& e)
-        {
-            // Token is invalid
             auto response = drogon::HttpResponse::newHttpResponse();
             response->setStatusCode(drogon::k401Unauthorized);
             response->setBody("Unauthorized: Invalid token");
-            fcb(response);
-            return;
+            std::cerr << "Unauthorized: Invalid token. " << e.what() << "\n";
         }
         catch (const std::exception& e)
         {
-            // Handle other standard exceptions
+            std::cerr << "Handle other standard exceptions. " << e.what() << "\n";
         }
     }
     else

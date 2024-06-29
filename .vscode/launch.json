@@ -5,8 +5,8 @@
             "name": "g++ - Build and debug active file",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/my-qml-app",
-            "args": [],
+            "program": "${workspaceFolder}/build/Debug/Services/UI/UI",
+            "args": ["-e", "/workspaces/qmldevcontainer/.env"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "externalConsole": false,
@@ -25,7 +25,7 @@
                     "value": "${workspaceFolder}/build/lib/:$LD_LIBRARY_PATH"
                 }
             ],
-            "preLaunchTask": "make",
+            // "preLaunchTask": "make",
         }
     ]
 }

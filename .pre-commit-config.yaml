@@ -30,5 +30,5 @@ repos:
     hooks:
       - id: check-file-headers
         name: Check File Headers
-        entry: ./scripts/check_file_headers.sh
+        entry: ./scripts/add_file_headers.sh
         language: script

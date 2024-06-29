@@ -1,13 +1,4 @@
-# ---------------------------------------------------------------------------------------
-#                         Copyright (©) Carl Zeiss Meditec AG
-#                               - All Rights Reserved -
-#
-#                     THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
-#                                  CARL ZEISS MEDITEC AG
-#
-#                       This copyright notice does not evidence any
-#                    actual or intended publication of such source code.
-# ---------------------------------------------------------------------------------------
+
 
 cmake_minimum_required(VERSION 3.21)
 project(APIGateway VERSION 0.1)
@@ -28,32 +19,32 @@ message(STATUS "CONAN_LIBS_DROGON: ${CONAN_LIBS_DROGON}")
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
 find_package(Drogon REQUIRED)
-find_package(log4cplus REQUIRED)
 find_package(nlohmann_json REQUIRED)
 find_package(jwt-cpp REQUIRED)
-find_package(libenvpp REQUIRED)
+find_package(cxxopts REQUIRED)
+# Find and link OpenSSL (required by jwt-cpp)
+find_package(OpenSSL REQUIRED)
 
 # Add the source files
 set(SOURCES
-    ${PROJECT_SOURCE_DIR}/src/GatewayController.cpp
+${PROJECT_SOURCE_DIR}/src/GatewayController.cpp
 )
 
 # Add the header files for MOC
 set(HEADERS
-    ${PROJECT_SOURCE_DIR}/include/JwtAuthFilter.h
-    # ${PROJECT_SOURCE_DIR}/include/Logger.h
-    # ${PROJECT_SOURCE_DIR}/include/LoggingHelpers.h
+${PROJECT_SOURCE_DIR}/include/JwtAuthFilter.h
 )
 
 add_library(lib${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
 target_link_libraries(lib${PROJECT_NAME}
-    PUBLIC log4cplus::log4cplus
     PUBLIC Drogon::Drogon
     PUBLIC nlohmann_json::nlohmann_json
     PUBLIC jwt-cpp::jwt-cpp
-    PUBLIC libenvpp::libenvpp
-    rt)
+    PUBLIC cxxopts::cxxopts
+    PUBLIC rt
+    PUBLIC libUtils
+)
 
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCE_DIR}/src/main.cpp)
 target_link_libraries(${PROJECT_NAME} lib${PROJECT_NAME})
@@ -68,3 +59,4 @@ if(BUILD_TESTS)
     )
     add_test(NAME ${PROJECT_NAME}_test COMMAND ${PROJECT_NAME}_tests)
 endif()
+add_custom_target(run${PROJECT_NAME} COMMAND ${PROJECT_NAME} -e /workspaces/qmldevcontainer/.env )

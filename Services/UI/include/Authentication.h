@@ -1,27 +1,14 @@
-#pragma once
-
-#include <QObject>
-#include <string>
-
-class Authentication : public QObject
-{
-    Q_OBJECT
-public:
-    explicit Authentication(QObject* parent = nullptr);
-
-    Q_INVOKABLE void registerUser(const QString& email, const QString& password);
-    Q_INVOKABLE void loginUser(const QString& email, const QString& password);
-    Q_INVOKABLE void sendPasswordResetEmail(const QString& email);
-
-signals:
-    void registrationSuccess();
-    void registrationFailure(const QString& error);
-    void loginSuccess();
-    void loginFailure(const QString& error);
-    void passwordResetSuccess();
-    void passwordResetFailure(const QString& error);
-
-private:
-    std::string performPostRequest(const std::string& url, const std::string& payload);
-    std::string firebaseApiKey;
-};
+/*----------------------------------------------------------------------
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ ----------------------------------------------------------------------*/
